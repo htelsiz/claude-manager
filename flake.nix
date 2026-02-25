@@ -6,6 +6,10 @@
   outputs =
     { nixpkgs, ... }:
     {
+      overlays.default = final: _prev: {
+        cchooks = final.callPackage ./pkgs/cchooks { };
+      };
+
       homeModules = {
         claude-manager = import ./modules;
         default = import ./modules;

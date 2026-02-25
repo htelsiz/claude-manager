@@ -7,7 +7,9 @@ rec {
       pythonPackages ? (_: [ ]),
     }:
     let
-      python = pkgs.python3.withPackages pythonPackages;
+      python = pkgs.python3.withPackages (
+        ps: [ (pkgs.cchooks or (pkgs.callPackage ../pkgs/cchooks { })) ] ++ (pythonPackages ps)
+      );
     in
     pkgs.writeScript "claude-hook-${name}" ''
       #!${python}/bin/python3
